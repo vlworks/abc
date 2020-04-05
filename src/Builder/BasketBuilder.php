@@ -27,11 +27,11 @@ class BasketBuilder
      */
     public function __construct(SessionInterface $session)
     {
+        $this->session =$session;
         $this->billing = new Card();
         $this->discount = new NullObject();
         $this->communication = new Email();
         $this->security = new Security($this->session);
-        $this->session =$session;
     }
 
     /**
