@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Service\Order;
 
+use Builder\BasketBuilder;
 use Model;
 use Model\Entity\Product;
 use Model\Repository\ProductRepository;
@@ -91,20 +92,20 @@ class Basket
      * @throws BillingException
      * @throws CommunicationException
      */
-    public function checkout(): void
+    public function checkout(BasketBuilder $basketBuilder): void
     {
         // Здесь должна быть некоторая логика выбора способа платежа
-        $billing = new Card();
+        $billing = $basketBuilder->getBilling();
 
         // Здесь должна быть некоторая логика получения информации о скидке
         // пользователя
-        $discount = new NullObject();
+        $discount = $basketBuilder->getDiscount();
 
         // Здесь должна быть некоторая логика получения способа уведомления
         // пользователя о покупке
-        $communication = new Email();
+        $communication = $basketBuilder->getCommunication();
 
-        $security = new Security($this->session);
+        $security = $basketBuilder->getSecurity();
 
         $this->checkoutProcess($discount, $billing, $security, $communication);
     }
