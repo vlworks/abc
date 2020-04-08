@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controller;
 
 use Exception;
+use Facade\CheckoutFacade;
 use Framework\BaseController;
 use Service\Billing\Exception\BillingException;
 use Service\Communication\Exception\CommunicationException;
@@ -56,7 +57,7 @@ class OrderController extends BaseController
             return $this->redirect('user_authentication');
         }
 
-        (new Basket($request->getSession()))->checkout();
+        (new CheckoutFacade($request->getSession()))->checkout();
 
         return $this->render('order/checkout.html.php');
     }
