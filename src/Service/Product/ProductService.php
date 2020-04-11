@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Service\Product;
 
+use Comparator\ProductNameComparator;
+use Comparator\ProductPriceComparator;
 use Model;
 use Model\Entity\Product;
 use Model\Repository\ProductRepository;
@@ -29,6 +31,34 @@ class ProductService
     public function getAll(string $sortType): array
     {
         $productList = $this->getProductRepository()->fetchAll();
+
+
+
+        /**
+         * Первый вариант, но тут опять же остаются IF
+         */
+
+        if ($sortType === 'name'){
+            $productSorter = new ProductSorter(new ProductNameComparator());
+            $productSorter->sort($productList);
+        }
+        if ($sortType === 'price'){
+            $productSorter = new ProductSorter((new ProductPriceComparator()));
+            $productSorter->sort($productList);
+        }
+
+        /**
+         * Второй вариант, а так можно?
+         */
+
+        $sorter = [
+            'price' => new ProductPriceComparator(),
+            'name' => new ProductNameComparator()
+        ];
+
+        $productSorter = new ProductSorter($sorter[$sortType]);
+        $productSorter->sort($productList);
+
 
         // Применить паттерн Стратегия
         // $sortType === 'price'; // Сортировка по цене
