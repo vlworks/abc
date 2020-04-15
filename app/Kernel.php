@@ -50,13 +50,19 @@ class Kernel
      */
     protected function registerConfigs(): void
     {
-        try {
-            $fileLocator = new FileLocator(__DIR__ . DIRECTORY_SEPARATOR . 'config');
-            $loader = new PhpFileLoader($this->containerBuilder, $fileLocator);
-            $loader->load('parameters.php');
-        } catch (\Throwable $e) {
-            die('Cannot read the config file. File: ' . __FILE__ . '. Line: ' . __LINE__);
-        }
+        /**
+         * Не уверен в правильности исполнения ...
+         */
+        $registerCommand = new \Framework\Command\RegisterConfigCommand($this->containerBuilder);
+        (new \Framework\Command\RegisterHandlerCommand($registerCommand))->execute();
+
+//        try {
+//            $fileLocator = new FileLocator(__DIR__ . DIRECTORY_SEPARATOR . 'config');
+//            $loader = new PhpFileLoader($this->containerBuilder, $fileLocator);
+//            $loader->load('parameters.php');
+//        } catch (\Throwable $e) {
+//            die('Cannot read the config file. File: ' . __FILE__ . '. Line: ' . __LINE__);
+//        }
     }
 
     /**

@@ -18,3 +18,8 @@ class MainController extends BaseController
         return $this->render('main/index.html.php');
     }
 }
+
+/**
+ * Шаблонный метод используется в контроллерах. Они все наследуют от абстрактного BaseController
+ * имеют собственную реализацию различных методов, но единым у всех остается метод render()
+ */
