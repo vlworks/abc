@@ -27,9 +27,13 @@ $routes->add(
     'order_info',
     new Route('/order/info', ['_controller' => [OrderController::class, 'infoAction']])
 );
+//$routes->add(
+//    'order_checkout',
+//    new Route('/order/checkout', ['_controller' => [OrderController::class, 'checkoutAction']])
+//);
 $routes->add(
     'order_checkout',
-    new Route('/order/checkout', ['_controller' => [OrderController::class, 'checkoutAction']])
+    new Route('/order/checkout', ['_controller' => [OrderCheckoutController::class, 'checkoutAction']])
 );
 
 $routes->add(
@@ -43,4 +47,7 @@ $routes->add(
 
 return $routes;
 
-
+/**
+ * Мне кажется паттерн Front Controller подходит роутингу - он получает запрос и знает кому его адресовать.
+ * Сопоставляет URI, передает классу контроллепу и знает какой метед в нем необходимо вызвать.
+ */
